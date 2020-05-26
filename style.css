@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: black;
+  color: white;
+}
+
+.container {
+  max-width: 800px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+input,
+button {
+  border: 1px solid white;
+  border-radius: 5px;
+}
+input {
+  width: 30%;
+}

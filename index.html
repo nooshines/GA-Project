@@ -10,11 +10,34 @@
       integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
       crossorigin="anonymous"
     />
+    <!-- Font-awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+    />
     <!--My CSS-->
     <link rel="stylesheet" href="style.css" />
-    <title></title>
+    <title>Cocktail Recipe Search</title>
   </head>
   <body>
+    <div class="container my-5 mx-auto">
+      <h2 class="my-4">Search for Cocktail Recipe</h2>
+      <div class="flex">
+        <form id="submit">
+          <input type="text" id="search" placeholder="Search for cocktail" />
+          <button class="search-btn" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+          <button class="random-btn" id="random">
+            <i class="fas fa-random"></i>
+          </button>
+        </form>
+      </div>
+      <div id="result-heading"></div>
+      <div id="cocktails" class="cocktails"></div>
+      <div id="single-cocktail"></div>
+    </div>
+
     <!-- JS, Popper.js, and jQuery -->
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
