@@ -1,3 +1,4 @@
+//fetch Drink based on search term
 async function getCocktails(searchTerm) {
   const response = await $.ajax(
     `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`
@@ -5,8 +6,18 @@ async function getCocktails(searchTerm) {
     console.log(e);
   });
   console.log(response);
-
   showCocktails(response, searchTerm);
+}
+
+//fetch drink based on ID
+async function getCocktailById(id) {
+  const res = await $.ajax(
+    `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`
+  ).catch((e) => {
+    console.log(e);
+  });
+  console.log(res);
+  showDetails(res.drinks[0]);
 }
 
 function showCocktails(data, title) {
@@ -22,10 +33,10 @@ function showCocktails(data, title) {
     );
     //update UI with the result
     data.drinks.forEach((drink) => {
-      $("#cocktails").append(`
+      let output = $("#cocktails").append(`
        <div class="drink" data-drinkID="${drink.idDrink}">
          <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
-         <div class="drink-info" >
+         <div class="drink-info">
            <h6>${drink.strDrink}</h6>
          </div>
        </div>
@@ -34,6 +45,10 @@ function showCocktails(data, title) {
   }
   $("[data-drinkID]").on("click", (e) => {
     console.log(e.currentTarget);
+    //I couldnt find the way to get the id with jquery syntaxt ??
+    const drinkID = e.currentTarget.getAttribute("data-drinkID");
+    console.log(drinkID);
+    getCocktailById(drinkID);
   });
 }
 
