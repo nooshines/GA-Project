@@ -6,7 +6,6 @@ async function getCocktails(searchTerm) {
   });
   console.log(response);
 
-  //updating UI
   showCocktails(response, searchTerm);
 }
 
@@ -21,26 +20,33 @@ function showCocktails(data, title) {
     $("#result-heading").append(
       `<h4 class="text-white m-5">Search Result for ${title}:</h4>`
     );
-    //update ui with the result
+    //update UI with the result
     data.drinks.forEach((drink) => {
       $("#cocktails").append(`
-       <div class="drink">
+       <div class="drink" data-drinkID="${drink.idDrink}">
          <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
-         <div class="drink-info" data-drinkID="${drink.idDrink}">
+         <div class="drink-info" >
            <h6>${drink.strDrink}</h6>
          </div>
        </div>
       `);
     });
   }
+  $("[data-drinkID]").on("click", (e) => {
+    console.log(e.currentTarget);
+  });
+}
+
+function ClearDom() {
+  $("#alert").empty();
+  $("#search").val("");
+  $("#cocktails").empty();
 }
 
 //on ready
 $(() => {
   $("#submit").on("submit", (e) => {
     e.preventDefault();
-    $("#alert").empty();
-    $("#search").empty();
     const searchTerm = $("#search").val();
     //give alert if we dont put anything and press enter
     if (searchTerm.trim()) {
@@ -50,5 +56,6 @@ $(() => {
         `<p class="text-danger m-3">please enter a search term .</p>`
       );
     }
+    ClearDom();
   });
 });
