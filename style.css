@@ -37,11 +37,11 @@ input {
   margin-top: 20px;
 }
 .drink {
-  position: relative;
+  /* position: relative; */
+  /* text-align: center; */
   cursor: pointer;
   height: 180px;
   width: 180px;
-  text-align: center;
 }
 .drink img {
   border: 3px gold solid;
@@ -49,6 +49,15 @@ input {
   height: 100%;
 }
 .drink-info {
+}
+
+.single-drink {
+  margin: 30px auto;
+  width: 70%;
+}
+.single-drink img {
+  width: 300px;
+  border: 4px gold solid;
 }
 @media (max-width: 800px) {
 }
