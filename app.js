@@ -34,22 +34,33 @@ function showDetails(data) {
     }
   }
   console.log(ingredients);
-  $("#single-cocktail").append(
-    `
-    <div class="single-drink">
-      <h1 class="mt-5">${data.strDrink}</h1>
-      <img src="${data.strDrinkThumb}" alt="${data.strDrink}"/>
-      <div class="single-drink-info">
-        <h2 clsss="my-4">Instructions:</h2>
-        <p>${data.strInstructions}</p>
-        <h2>Ingredients</h2>
-        <ul>
-         <li>${ingredients.join("</li><li>")}</li>
-        </ul>
+
+  $("#single-cocktail").append(`
+    <div class="modal fade" id="myModal">
+      <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+              <h4 class="text-dark font-weight-bold">${data.strDrink}</h4>
+           </div>
+           <div class="modal-body">
+             <div class="single-drink">
+                  <img src="${data.strDrinkThumb}" alt="${data.strDrink}">
+                   <h2 class="mt-4">Instructions:</h2>
+                   <p class="text-dark">${data.strInstructions}</p>
+                 <h2>Ingredients</h2>
+                 <ul>
+                  ${ingredients
+                    .map((item) => `<li class="text-dark">${item}`)
+                    .join("")}
+                 </ul>
+                </div>
+               </div>
+            </div>
+        </div>
       </div>
-    </div>
-    `
-  );
+    </div>    
+  `);
+  $("#myModal").modal("show");
 }
 
 //Show result based on cocktail search by name

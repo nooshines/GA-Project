@@ -27,7 +27,7 @@ button {
   border-radius: 5px;
 }
 input {
-  width: 30%;
+  width: 50%;
 }
 
 .cocktails {
@@ -60,8 +60,32 @@ input {
   border: 4px gold solid;
 }
 @media (max-width: 800px) {
+  .cocktails {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media (max-width: 700px) {
+  .cocktails {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .drink {
+    height: 200px;
+    width: 200px;
+  }
 }
 @media (max-width: 500px) {
+  input[type="text"] {
+    width: 80%;
+  }
+  .cocktails {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .drink {
+    margin-left: 25px;
+    height: 300px;
+    width: 300px;
+  }
+  .single-drink img {
+    width: 200px;
+  }
 }
