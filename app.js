@@ -24,10 +24,10 @@ function showCocktails(data, title) {
     //update ui with the result
     data.drinks.forEach((drink) => {
       $("#cocktails").append(`
-       <div class="drinks">
+       <div class="drink">
          <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
          <div class="drink-info" data-drinkID="${drink.idDrink}">
-           <h3>${drink.strDrink}</h3>
+           <h6>${drink.strDrink}</h6>
          </div>
        </div>
       `);
