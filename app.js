@@ -21,6 +21,17 @@ function showCocktails(data, title) {
     $("#result-heading").append(
       `<h4 class="text-white m-5">Search Result for ${title}:</h4>`
     );
+    //update ui with the result
+    data.drinks.forEach((drink) => {
+      $("#cocktails").append(`
+       <div class="drinks">
+         <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
+         <div class="drink-info" data-drinkID="${drink.idDrink}">
+           <h3>${drink.strDrink}</h3>
+         </div>
+       </div>
+      `);
+    });
   }
 }
 
