@@ -41,6 +41,7 @@ function showDetails(data) {
          <div class="modal-content">
            <div class="modal-header">
               <h4 class="text-dark font-weight-bold">${data.strDrink}</h4>
+              <button class="close">x</button>
            </div>
            <div class="modal-body">
              <div class="single-drink">
@@ -60,6 +61,9 @@ function showDetails(data) {
       </div>
     </div>    
   `);
+  $(".close").on("click", () => {
+    $("#myModal").modal("hide");
+  });
   $("#myModal").modal("show");
 }
 
@@ -79,8 +83,10 @@ function showCocktails(data, title) {
       $("#cocktails").append(`
        <div class="drink" data-drinkID="${drink.idDrink}">
          <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
+         <i class="fa fa-heart heart-icon" aria-hidden="true"></i
+           >
          <div class="drink-info">
-           <h6>${drink.strDrink}</h6>
+           <h6 class="mt-2">${drink.strDrink}</h6>
          </div>
        </div>
       `);
@@ -93,6 +99,12 @@ function showCocktails(data, title) {
     const drinkID = e.currentTarget.dataset.drinkid;
     console.log(drinkID);
     getCocktailById(drinkID);
+  });
+  //event listener for favourite
+  $(".heart-icon").on("click", () => {
+    // $(".heart-icon").css({ "color ": "red" });
+    $("#myModal").modal("show");
+    console.log("heart clicked");
   });
 }
 
