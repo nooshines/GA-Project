@@ -4,14 +4,19 @@ let faveDrinks = [];
 let allDrinks = [];
 
 //save to favourites
-function saveFave(index, listArray) {
+function saveFave(listArray, index) {
   console.log(listArray, index);
+  console.log("index", index);
   const faveItem = listArray[parseInt(index)];
-  const currentSavedItem = faveDrinks.find((item) => {
-    if (item.idDrink === faveItem.idDrink) {
-      return true;
-    }
-  });
+
+  let currentSavedItem;
+  if (faveDrinks.length) {
+    currentSavedItem = faveDrinks.find((item) => {
+      if (item.idDrink === faveItem.idDrink) {
+        return true;
+      }
+    });
+  }
   if (!currentSavedItem) {
     faveDrinks.push(faveItem);
     localStorage.setItem("faves", JSON.stringify(faveDrinks));
@@ -27,6 +32,30 @@ function loadFave() {
     faveDrinks = [];
   }
 }
+
+//
+function onFaveClick(e) {
+  let drinksId = e.currentTarget.dataset.drinkid;
+  let drinksIndex = e.currentTarget.dataset.drinksindex;
+  let detectFave = $(e.currentTarget).hasClass("toggle-heart");
+
+  console.log("detectfave:", detectFave);
+  console.log("favedrinks:", faveDrinks);
+
+  if (detectFave === true && faveDrinks.length) {
+    faveDrinks = faveDrinks.filter((drink) => {
+      if (drink.idDrink !== drinksId) {
+        return true;
+      }
+    });
+    localStorage.setItem("faves", JSON.stringify(faveDrinks));
+  } else {
+    console.log("savefave");
+    saveFave(drinks, drinksIndex);
+  }
+  $(e.currentTarget).toggleClass("toggle-heart");
+}
+
 //fetch Drink based on name
 async function getCocktails(searchTerm) {
   const response = await $.ajax(
@@ -112,7 +141,7 @@ function showCocktails(data, title) {
       $("#cocktails").append(`
        <div class="drink">
          <img data-drinkID="${drink.idDrink}" src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
-         <i class="fa fa-heart heart-icon" aria-hidden="true" data-drinksindex=${index}></i>
+         <i class="fa fa-heart heart-icon" aria-hidden="true" data-drinksindex=${index} data-drinkID="${drink.idDrink}"></i>
          <div class="drink-info">
            <h6 class="mt-2">${drink.strDrink}</h6>
          </div>
@@ -121,36 +150,17 @@ function showCocktails(data, title) {
     });
   }
   //add event listener
-  $("[data-drinkID]").on("click", (e) => {
+  $("img[data-drinkID]").on("click", (e) => {
     console.log(e.currentTarget);
     $("#single-cocktail").empty();
     const drinkID = e.currentTarget.dataset.drinkid;
     console.log(drinkID);
     getCocktailById(drinkID);
   });
-  //event listener for favourite
 
+  //event listener for favourite
   $(".heart-icon").on("click", (e) => {
-    let drinksIndex = e.currentTarget.dataset.drinksindex;
-    console.log("drinkindex:", drinksIndex);
-    // saveFave(drinksIndex, drinks);
-    // $(e.currentTarget).addClass("toggle-heart");
-    $(e.currentTarget).toggleClass("toggle-heart");
-    let detectFave = $(e.currentTarget).hasClass("toggle-heart");
-    console.log("localstorage", faveDrinks);
-    if (detectFave === true) {
-      saveFave(drinksIndex, drinks);
-    } else if (detectFave === false) {
-      console.log("detectfave", detectFave);
-      // localStorage.removeItem(faveDrinks[faveDrinks.length - 1].idDrink);
-      console.log(
-        "localstorageremoveitem:",
-        localStorage.removeItem(
-          JSON.stringify(faveDrinks[faveDrinks.length - 1])
-        )
-      );
-      faveDrinks.pop();
-    }
+    onFaveClick(e);
   });
 }
 
