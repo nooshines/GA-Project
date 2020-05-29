@@ -1,6 +1,7 @@
 //variables
 let drinks;
 let faveDrinks = [];
+let allDrinks = [];
 
 //save to favourites
 function saveFave(index, listArray) {
@@ -12,7 +13,7 @@ function saveFave(index, listArray) {
     }
   });
   if (!currentSavedItem) {
-    faveDrinks.push(listArray[parseInt(index)]);
+    faveDrinks.push(faveItem);
     localStorage.setItem("faves", JSON.stringify(faveDrinks));
   }
 }
@@ -128,14 +129,28 @@ function showCocktails(data, title) {
     getCocktailById(drinkID);
   });
   //event listener for favourite
+
   $(".heart-icon").on("click", (e) => {
-    console.log("heart clicked");
     let drinksIndex = e.currentTarget.dataset.drinksindex;
-
-    saveFave(drinksIndex, drinks);
-
-    // $(this).css({ "color ": "red" });
-    //$(this).toggleClass("toggle-heart")
+    console.log("drinkindex:", drinksIndex);
+    // saveFave(drinksIndex, drinks);
+    // $(e.currentTarget).addClass("toggle-heart");
+    $(e.currentTarget).toggleClass("toggle-heart");
+    let detectFave = $(e.currentTarget).hasClass("toggle-heart");
+    console.log("localstorage", faveDrinks);
+    if (detectFave === true) {
+      saveFave(drinksIndex, drinks);
+    } else if (detectFave === false) {
+      console.log("detectfave", detectFave);
+      // localStorage.removeItem(faveDrinks[faveDrinks.length - 1].idDrink);
+      console.log(
+        "localstorageremoveitem:",
+        localStorage.removeItem(
+          JSON.stringify(faveDrinks[faveDrinks.length - 1])
+        )
+      );
+      faveDrinks.pop();
+    }
   });
 }
 

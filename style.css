@@ -45,14 +45,13 @@ input {
   margin: 10px;
 }
 .heart-icon {
-  color: white;
   position: absolute;
   top: 10px;
   left: 10px;
 }
+
 .heart-icon:hover {
   color: red;
-  opacity: 1;
 }
 .drink img {
   border: 3px gold solid;
@@ -83,12 +82,15 @@ input {
 span {
   color: white;
 }
-.fav a {
+#fave a {
   opacity: 0.5;
 }
-.fav a:hover {
+#fave a:hover {
   text-decoration: none;
   opacity: 1;
+}
+.toggle-heart {
+  color: red;
 }
 
 @media (max-width: 800px) {
