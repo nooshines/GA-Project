@@ -52,13 +52,14 @@ input {
 }
 .heart-icon:hover {
   color: red;
-  opacity: 0.6;
+  opacity: 1;
 }
 .drink img {
   border: 3px gold solid;
   width: 100%;
   height: 100%;
 }
+
 /* .drink-info {
 } */
 
@@ -70,7 +71,7 @@ input {
   width: 300px;
   border: 4px gold solid;
 }
-.fav {
+#fave {
   margin-top: 30px;
   margin-right: 80px;
   display: flex;

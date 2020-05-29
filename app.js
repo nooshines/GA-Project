@@ -1,3 +1,31 @@
+//variables
+let drinks;
+let faveDrinks = [];
+
+//save to favourites
+function saveFave(index, listArray) {
+  console.log(listArray, index);
+  const faveItem = listArray[parseInt(index)];
+  const currentSavedItem = faveDrinks.find((item) => {
+    if (item.idDrink === faveItem.idDrink) {
+      return true;
+    }
+  });
+  if (!currentSavedItem) {
+    faveDrinks.push(listArray[parseInt(index)]);
+    localStorage.setItem("faves", JSON.stringify(faveDrinks));
+  }
+}
+
+//Load Favourites
+function loadFave() {
+  let fave = localStorage.getItem("faves");
+  if (fave) {
+    faveDrinks = JSON.parse(fave);
+  } else {
+    faveDrinks = [];
+  }
+}
 //fetch Drink based on name
 async function getCocktails(searchTerm) {
   const response = await $.ajax(
@@ -6,6 +34,7 @@ async function getCocktails(searchTerm) {
     console.log(e);
   });
   console.log(response);
+  drinks = response.drinks;
   showCocktails(response, searchTerm);
 }
 
@@ -30,7 +59,7 @@ function showDetails(data) {
         `${data[`strIngredient${i}`]} - ${data[`strMeasure${i}`]}`
       );
     } else {
-      break; //break the loop
+      break;
     }
   }
   console.log(ingredients);
@@ -70,7 +99,6 @@ function showDetails(data) {
 //Show result based on cocktail search by name
 function showCocktails(data, title) {
   if (data.drinks === null) {
-    //if type something that is not valid or is not in the api I want to give me feedback
     $("#result-heading").append(
       `<p class="text-white m-5">There are no search result for '${title}' ,try again!</p>`
     );
@@ -79,12 +107,11 @@ function showCocktails(data, title) {
     $("#result-heading").append(
       `<h4 class="text-white m-5">Search Result for ${title}:</h4>`
     );
-    data.drinks.forEach((drink) => {
+    data.drinks.forEach((drink, index) => {
       $("#cocktails").append(`
-       <div class="drink" data-drinkID="${drink.idDrink}">
-         <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
-         <i class="fa fa-heart heart-icon" aria-hidden="true"></i
-           >
+       <div class="drink">
+         <img data-drinkID="${drink.idDrink}" src="${drink.strDrinkThumb}" alt="${drink.strDrink}"/>
+         <i class="fa fa-heart heart-icon" aria-hidden="true" data-drinksindex=${index}></i>
          <div class="drink-info">
            <h6 class="mt-2">${drink.strDrink}</h6>
          </div>
@@ -101,10 +128,14 @@ function showCocktails(data, title) {
     getCocktailById(drinkID);
   });
   //event listener for favourite
-  $(".heart-icon").on("click", () => {
-    // $(".heart-icon").css({ "color ": "red" });
-    $("#myModal").modal("show");
+  $(".heart-icon").on("click", (e) => {
     console.log("heart clicked");
+    let drinksIndex = e.currentTarget.dataset.drinksindex;
+
+    saveFave(drinksIndex, drinks);
+
+    // $(this).css({ "color ": "red" });
+    //$(this).toggleClass("toggle-heart")
   });
 }
 
@@ -119,6 +150,7 @@ function ClearDom() {
 
 //on ready
 $(() => {
+  loadFave();
   $("#submit").on("submit", (e) => {
     e.preventDefault();
     const searchTerm = $("#search").val();
@@ -126,7 +158,7 @@ $(() => {
       getCocktails(searchTerm);
     } else {
       $("#alert").append(
-        `<p class="text-danger m-3">please enter a search term .</p>` //give alert if we dont put anything and press enter
+        `<p class="text-danger m-3">please enter a search term .</p>`
       );
     }
     ClearDom();
