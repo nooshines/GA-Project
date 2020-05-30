@@ -5,10 +5,7 @@ let allDrinks = [];
 
 //save to favourites
 function saveFave(listArray, index) {
-  console.log(listArray, index);
-  console.log("index", index);
   const faveItem = listArray[parseInt(index)];
-
   let currentSavedItem;
   if (faveDrinks.length) {
     currentSavedItem = faveDrinks.find((item) => {
@@ -33,14 +30,11 @@ function loadFave() {
   }
 }
 
-//
+//add and remove to favourite
 function onFaveClick(e) {
   let drinksId = e.currentTarget.dataset.drinkid;
   let drinksIndex = e.currentTarget.dataset.drinksindex;
   let detectFave = $(e.currentTarget).hasClass("toggle-heart");
-
-  console.log("detectfave:", detectFave);
-  console.log("favedrinks:", faveDrinks);
 
   if (detectFave === true && faveDrinks.length) {
     faveDrinks = faveDrinks.filter((drink) => {
@@ -50,7 +44,6 @@ function onFaveClick(e) {
     });
     localStorage.setItem("faves", JSON.stringify(faveDrinks));
   } else {
-    console.log("savefave");
     saveFave(drinks, drinksIndex);
   }
   $(e.currentTarget).toggleClass("toggle-heart");
@@ -151,10 +144,8 @@ function showCocktails(data, title) {
   }
   //add event listener
   $("img[data-drinkID]").on("click", (e) => {
-    console.log(e.currentTarget);
     $("#single-cocktail").empty();
     const drinkID = e.currentTarget.dataset.drinkid;
-    console.log(drinkID);
     getCocktailById(drinkID);
   });
 
