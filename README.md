@@ -35,4 +35,5 @@ Implementation Period: one Weeks
 ## FURTHER IMPROVEMENTS
 
 - Improve UI
--
+- add backend to save information to database, at the moment when add a drink in favourite it wont persist .
+- add a featute to give the calorie information about each drink .
